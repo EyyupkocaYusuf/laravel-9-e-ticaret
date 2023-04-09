@@ -210,17 +210,17 @@ a {
 #commerce .carousel .carousel-caption {
     right: 0%;
     left: 0;
-    height: 50px;
+    height: 55px;
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
 }
 
 #commerce .carousel img {
-    height: 356px !important;
+    height: 400px !important;
 }
 
 #commerce #sidebar-product {
-    height: 356px !important;
+    height: 400px !important;
 }
 
 #commerce .list-group.categories {
