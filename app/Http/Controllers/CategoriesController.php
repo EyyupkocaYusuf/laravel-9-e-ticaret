@@ -13,5 +13,6 @@ class CategoriesController extends Controller
         $category = Category::whereSlug($slug_categoryname)->firstOrFail();
         $under_categories = Category::whereTop_id($category->id)->get();
         return view('category',compact('category','under_categories'));
+
     }
 }
