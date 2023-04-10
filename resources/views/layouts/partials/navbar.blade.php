@@ -36,7 +36,12 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">Siparişlerim</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Çıkış</a></li>
+                        <li>
+                            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit() ">Çıkış</a>
+                        <form id="logout-form" method="post" action="{{route('users.logout')}}" style="display: none;">
+                            @csrf
+                        </form>
+                        </li>
                     </ul>
                 </li>
                 @endauth

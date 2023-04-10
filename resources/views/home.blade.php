@@ -4,6 +4,18 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{session('success')}}
+                    </div>
+                @else
+                    @if(session('warning'))
+                        <div class="alert alert-warning">
+                            {{session('warning')}}
+                        </div>
+                    @endif
+                @endif
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Kategoriler</div>
                     <div class="list-group categories">

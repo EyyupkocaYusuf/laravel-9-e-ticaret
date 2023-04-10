@@ -4,11 +4,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        {{$errors->first()}}
+                    </div>
+                @endif
                 <div class="panel panel-default">
                     <div class="panel-heading">Oturum Aç</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="#">
-
+                        <form class="form-horizontal" role="form" method="POST" action="{{route('users.loginpost')}}">
+                            @csrf
                             <div class="form-group">
                                 <label for="email" class="col-md-4 control-label">Email</label>
                                 <div class="col-md-6">
@@ -17,9 +22,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="sifre" class="col-md-4 control-label">Şifre</label>
+                                <label for="password" class="col-md-4 control-label">Şifre</label>
                                 <div class="col-md-6">
-                                    <input id="sifre" type="password" class="form-control" name="sifre" required>
+                                    <input id="password" type="password" class="form-control" name="password" required>
                                 </div>
                             </div>
 

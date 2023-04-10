@@ -10,12 +10,36 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
 
 class UsersController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logOut');
+    }
     public function login()
     {
         return view('users.login');
+    }
+
+    public  function loginPost(Request $request)
+    {
+        if(Auth::attempt(['email'=>$request->email, 'password' => $request->password],$request->has('benihatirla')))
+        {
+            toastr()->success('Giriş Yapıldı', 'Success');
+            return redirect()->intended('/');
+        }
+        return redirect()->route('users.login')->withErrors('Mail veya Şifre hatalı');
+    }
+
+    public  function logOut()
+    {
+        Auth::logout();
+        toastr()->success('Çıkış Yapıldı', 'Success');
+        return redirect()->route('users.login');
     }
 
     public function register()
@@ -44,8 +68,29 @@ class UsersController extends Controller
         ]);
 
         Mail::to(request('email'))->send(new UsersRegisterMail($user));
+        if($user->activation_key == null and $user->is_active==1)
+        {
+            auth()->login($user);
+        }
 
-       auth()->login($user);
         return redirect()->route('home')->with('success','Oturum Açıldı.');
     }
+
+    public function activation($key)
+    {
+        $user = User::where('activation_key',$key)->first();
+        if(!is_null($user))
+        {
+            $user->activation_key=null;
+            $user->is_active=1;
+            $user->save();
+            auth()->login($user);
+            return redirect()->to('/')->with('success','Kaydınız başarılı bir şekilde aktifleştirildi');
+        }
+        else{
+            return redirect()->to('/')->with('warning','Kaydınız  aktifleştirilemedi');
+        }
+    }
+
+
 }
