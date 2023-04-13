@@ -12,9 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('home');
 Route::get('/kategori/{slug_categoryname}',[\App\Http\Controllers\CategoriesController::class,'index'])->name('category.index');
 Route::get('/urun/{slug_productname}',[\App\Http\Controllers\ProductsController::class,'index'])->name('product.index');
+Route::post('/ara',[\App\Http\Controllers\ProductsController::class,'Search'])->name('product.search');
+Route::get('/ara',[\App\Http\Controllers\ProductsController::class,'Search'])->name('product.search');
 Route::get('/sepet',[\App\Http\Controllers\BasketController::class,'index'])->name('basket.index')->middleware('auth');
 Route::group(['middleware' =>'auth'],function (){
     Route::get('/odeme',[\App\Http\Controllers\PayController::class,'index'])->name('pay.index');

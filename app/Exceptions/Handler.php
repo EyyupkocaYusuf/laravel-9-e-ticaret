@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -41,6 +43,15 @@ class Handler extends ExceptionHandler
     }
     protected function unauthenticated($request, AuthenticationException $exception)
     {
+        if ($exception instanceof NotFoundHttpException)
+        {
+            return response()->view('errors.404',compact('exception'),404);
+        }
+        if ($exception instanceof ModelNotFoundException)
+        {
+            return response()->view('errors.404',compact('exception'),404);
+        }
+        // hocanın kullandıgı eski sürüm
         return $request->expectsJson()
             ? response()->json(['message' => 'Unauthenticated.'], 401)
             : redirect()->guest(route('users.login'));

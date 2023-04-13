@@ -12,12 +12,16 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Kategori Adı</div>
                     <div class="panel-body">
+                        @if(count($under_categories)>0)
                         <h3>Alt Kategoriler</h3>
                         <div class="list-group categories">
                             @foreach($under_categories as $under_category)
                             <a href="{{route('category.index',$under_category->slug)}}" class="list-group-item"><i class="fa fa-arrow-circle-right"></i>{{$under_category->category_name}}</a>
                                 @endforeach
                         </div>
+                        @else
+                            <div class="col-md-12">Bu kategoryde alt kategory bulunmamamkta</div>
+                        @endif
                         <h3>Fiyat Aralığı</h3>
                         <form>
                             <div class="form-group">
@@ -40,13 +44,26 @@
             </div>
             <div class="col-md-9">
                 <div class="products bg-content">
+                    @if(count($products)>0)
                     Sırala
-                    <a href="#" class="btn btn-default">Çok Satanlar</a>
-                    <a href="#" class="btn btn-default">Yeni Ürünler</a>
+                    <a href="?order=bestseller" class="btn btn-default">Çok Satanlar</a>
+                    <a href="?order=new" class="btn btn-default">Yeni Ürünler</a>
                     <hr>
+                    @endif
                     <div class="row">
-
+                        @if(count($products)==0)
+                            <div class="col-md-12">Bu kategoryde ürün bulunmamakta</div>
+                        @endif
+                        @foreach($products as $product)
+                            <div class="col-md-3 product">
+                                <a href="{{route('product.index',$product->slug)}}"><img src="https://picsum.photos/200/200"></a>
+                                <p><a href="{{route('product.index',$product->slug)}}">{{$product->product_name}}</a></p>
+                                <p class="price">{{$product->price}}</p>
+                                <p><a href="#" class="btn btn-theme">Sepete Ekle</a></p>
+                            </div>
+                        @endforeach
                     </div>
+                        {{ request()->has('order') ? $products->appends(['order' => request('order')])->links() : $products->links() }}
                 </div>
             </div>
         </div>

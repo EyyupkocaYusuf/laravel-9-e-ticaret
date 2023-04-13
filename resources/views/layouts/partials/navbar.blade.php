@@ -13,9 +13,10 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" action="{{route('product.search')}}" method="post">
+                {{csrf_field()}}
                 <div class="input-group">
-                    <input type="text" id="navbar-search" class="form-control" placeholder="Ara">
+                    <input type="text" name="wanted" id="navbar-search" class="form-control" placeholder="Ara" value="{{old('wanted')}}">
                     <span class="input-group-btn">
                             <button type="submit" class="btn btn-default">
                                 <i class="fa fa-search"></i>
