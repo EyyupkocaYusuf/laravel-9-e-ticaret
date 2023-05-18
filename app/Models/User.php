@@ -13,4 +13,9 @@ class User extends Authenticatable
     use SoftDeletes;
     protected $fillable = ['name_surname','email','password','activation_key','is_active'];
     protected $hidden = ['password','activation_key'];
+
+    public function detail()
+    {
+        return $this->hasOne(User_Detail::class,'user_details_id','id');
+    }
 }
