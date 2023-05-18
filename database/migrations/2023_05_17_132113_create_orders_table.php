@@ -13,14 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('basket', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->Integer('user_id')->unsigned();
+            $table->BigInteger('basket_id')->unsigned();
+            $table->decimal('order_amount',5,4);
+            $table->string('status',30)->nullable();
+
+            $table->string('bank',30)->nullable();
+            $table->integer('installment')->nullable();
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes()->nullable();
 
-            //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unique('basket_id');
+            //  $table->foreign('sepet_id')->references('id')->on('sepet')->onDelete('cascade');
         });
     }
 
@@ -31,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('basket');
+        Schema::dropIfExists('orders');
     }
 };

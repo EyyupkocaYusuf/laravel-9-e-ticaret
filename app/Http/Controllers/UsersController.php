@@ -73,7 +73,7 @@ class UsersController extends Controller
             auth()->login($user);
         }
 
-        return redirect()->route('home')->with('success','Oturum Açıldı.');
+        return redirect()->route('home')->with('warning','Alışverişe devam etmek için lütfen aktivasyon işlemini tamamlayın.');
     }
 
     public function activation($key)
