@@ -19,11 +19,16 @@ Route::get('/urun/{slug_productname}',[\App\Http\Controllers\ProductsController:
 Route::post('/ara',[\App\Http\Controllers\ProductsController::class,'Search'])->name('product.search');
 Route::get('/ara',[\App\Http\Controllers\ProductsController::class,'Search'])->name('product.search');
 Route::get('/sepet',[\App\Http\Controllers\BasketController::class,'index'])->name('basket.index')->middleware('auth');
+
+
+
 Route::group(['middleware' =>'auth'],function (){
     Route::get('/odeme',[\App\Http\Controllers\PayController::class,'index'])->name('pay.index');
     Route::get('/siparisler',[\App\Http\Controllers\OrdersController::class,'index'])->name('order.index');
     Route::get('/siparisler/{id}',[\App\Http\Controllers\OrdersController::class,'details'])->name('order.details');
 });
+
+
 Route::prefix('kullanici')->name('users.')->group(function () {
     Route::get('/girisyay',[\App\Http\Controllers\UsersController::class,'login'])->name('login');
     Route::get('/kayitol',[\App\Http\Controllers\UsersController::class,'register'])->name('register');

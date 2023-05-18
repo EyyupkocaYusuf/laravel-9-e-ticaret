@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Mail\UsersRegisterMail;
 use App\Models\User;
+use App\Models\User_Detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -66,7 +67,7 @@ class UsersController extends Controller
             'activation_key' => Str::random(60),
             'is_active'=> 0
         ]);
-
+        $user->detail()->save(new User_Detail());
         Mail::to(request('email'))->send(new UsersRegisterMail($user));
         if($user->activation_key == null and $user->is_active==1)
         {
