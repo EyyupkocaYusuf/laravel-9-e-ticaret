@@ -18,7 +18,12 @@ Route::get('/kategori/{slug_categoryname}',[\App\Http\Controllers\CategoriesCont
 Route::get('/urun/{slug_productname}',[\App\Http\Controllers\ProductsController::class,'index'])->name('product.index');
 Route::post('/ara',[\App\Http\Controllers\ProductsController::class,'Search'])->name('product.search');
 Route::get('/ara',[\App\Http\Controllers\ProductsController::class,'Search'])->name('product.search');
-Route::get('/sepet',[\App\Http\Controllers\BasketController::class,'index'])->name('basket.index')->middleware('auth');
+
+Route::prefix('sepet')->name('basket.')->group(function (){
+    Route::get('/',[\App\Http\Controllers\BasketController::class,'index'])->name('index')->middleware('auth');
+    Route::post('/ekle',[\App\Http\Controllers\BasketController::class,'add'])->name('add.product');
+});
+
 Route::group(['middleware' =>'auth'],function (){
     Route::get('/odeme',[\App\Http\Controllers\PayController::class,'index'])->name('pay.index');
     Route::get('/siparisler',[\App\Http\Controllers\OrdersController::class,'index'])->name('order.index');
