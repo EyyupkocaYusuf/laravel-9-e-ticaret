@@ -20,6 +20,11 @@
                         <a href="{{route('product.index',$productCartItem->options->slug)}}">
                             {{$productCartItem->name}}
                         </a>
+                        <form action="{{route('basket.remove',$productCartItem->rowId)}}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <input type="submit" class="btn btn-danger btn-xs" value="Sepetten Kaldır">
+                        </form>
                     </td>
                     <td>{{$productCartItem->price}} £</td>
                     <td>
