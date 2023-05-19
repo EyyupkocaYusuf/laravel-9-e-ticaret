@@ -33,6 +33,8 @@ Route::group(['middleware' =>'auth'],function (){
     Route::get('/siparisler',[\App\Http\Controllers\OrdersController::class,'index'])->name('order.index');
     Route::get('/siparisler/{id}',[\App\Http\Controllers\OrdersController::class,'details'])->name('order.details');
 });
+
+
 Route::prefix('kullanici')->name('users.')->group(function () {
     Route::get('/girisyay',[\App\Http\Controllers\UsersController::class,'login'])->name('login');
     Route::get('/kayitol',[\App\Http\Controllers\UsersController::class,'register'])->name('register');

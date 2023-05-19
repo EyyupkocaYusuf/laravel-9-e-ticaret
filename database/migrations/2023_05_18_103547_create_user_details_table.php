@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('basket', function (Blueprint $table) {
+        Schema::create('user_details', function (Blueprint $table) {
             $table->id();
-            $table->Integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
+            $table->string('adress',200)->nullable();
+            $table->string('phone',11)->nullable();
+            $table->string('mobile_phone',11)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes()->nullable();
-
-            //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('basket');
+        Schema::dropIfExists('user_details');
     }
 };
