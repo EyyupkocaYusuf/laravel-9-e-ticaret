@@ -50,10 +50,12 @@
                     <td class="text-right">{{\Gloudemans\Shoppingcart\Facades\Cart::total() }}</td>
                 </tr>
             </table>
-                <div>
-                    <a href="#" class="btn btn-info pull-left">Sepeti Boşalt</a>
+                    <form action="{{route('basket.unload')}}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <input type="submit" class="btn btn-info pull-left" value="Sepeti Boşalt">
+                    </form>
                     <a href="#" class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
-                </div>
             @else
                 <p>Sepetinizde ürün yok !</p>
             @endif

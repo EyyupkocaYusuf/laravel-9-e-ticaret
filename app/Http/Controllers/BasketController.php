@@ -24,4 +24,9 @@ class BasketController extends Controller
         Cart::remove($rowid);
         return redirect()->to('/sepet')->with('success','Ürün sepetten kaldırıldı');
     }
+    public function unload()
+    {
+        Cart::destroy();
+        return redirect()->to('/')->with('success','Sepet boşaltıldı');
+    }
 }

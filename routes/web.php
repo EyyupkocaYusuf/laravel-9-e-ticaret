@@ -24,7 +24,8 @@ Route::get('/ara',[\App\Http\Controllers\ProductsController::class,'Search'])->n
 Route::prefix('sepet')->name('basket.')->group(function (){
     Route::get('/',[\App\Http\Controllers\BasketController::class,'index'])->name('index')->middleware('auth');
     Route::post('/ekle',[\App\Http\Controllers\BasketController::class,'add'])->name('add.product');
-    Route::delete('/remove/{rowid}',[\App\Http\Controllers\BasketController::class,'remove'])->name('remove');
+    Route::delete('/kaldır/{rowid}',[\App\Http\Controllers\BasketController::class,'remove'])->name('remove');
+    Route::delete('/boşalt',[\App\Http\Controllers\BasketController::class,'unload'])->name('unload');
 });
 
 Route::group(['middleware' =>'auth'],function (){
