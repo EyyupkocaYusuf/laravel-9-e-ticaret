@@ -5410,6 +5410,25 @@ module.exports = {
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+$('.product-number-reduce,.product-item-increase').on('click', function () {
+  var id = $(this).attr('data-id');
+  var piece = $(this).attr('data-piece');
+  $.ajax({
+    type: 'PATCH',
+    url: '/basket/update/' + id,
+    data: {
+      piece: piece
+    },
+    success: function success() {
+      window.location.href = '/basket';
+    }
+  });
+});
 
 /***/ }),
 

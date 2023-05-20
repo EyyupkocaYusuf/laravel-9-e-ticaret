@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::patch('sepet/update/{rowid}', [\App\Http\Controllers\BasketController::class, 'update'])
+    ->name('basket.update')
+    ->middleware('web');
 
 Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('home');
 Route::get('/kategori/{slug_categoryname}',[\App\Http\Controllers\CategoriesController::class,'index'])->name('category.index');
@@ -26,6 +29,7 @@ Route::prefix('sepet')->name('basket.')->group(function (){
     Route::post('/ekle',[\App\Http\Controllers\BasketController::class,'add'])->name('add.product');
     Route::delete('/kaldır/{rowid}',[\App\Http\Controllers\BasketController::class,'remove'])->name('remove');
     Route::delete('/boşalt',[\App\Http\Controllers\BasketController::class,'unload'])->name('unload');
+    Route::patch('/update/{rowid}',[\App\Http\Controllers\BasketController::class,'update'])->name('update');
 });
 
 Route::group(['middleware' =>'auth'],function (){

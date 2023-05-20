@@ -28,9 +28,9 @@
                     </td>
                     <td>{{$productCartItem->price}} £</td>
                     <td>
-                        <a href="#" class="btn btn-xs btn-default">-</a>
-                        <span style="padding: 10px 20px">{{$productCartItem->qty}}</span>
-                        <a href="#" class="btn btn-xs btn-default">+</a>
+                        <a href="#" class="btn btn-xs btn-default product-number-reduce" data-id="{{ $productCartItem->rowId }}" data-piece="{{ $productCartItem->qty-1 }}">-</a>
+                        <span style="padding: 10px 20px">{{ $productCartItem->qty }}</span>
+                        <a href="#" class="btn btn-xs btn-default product-item-increase" data-id="{{ $productCartItem->rowId }}" data-piece="{{ $productCartItem->qty+1 }}">+</a>
                     </td>
                     <td class="text-right">
                         {{$productCartItem->subtotal}}
@@ -61,4 +61,26 @@
             @endif
         </div>
     </div>
+
+    <script>
+        $(function () {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            $('.product-number-reduce, .product-item-increase').on('click', function () {
+                var id = $(this).attr('data-id');
+                var piece = $(this).attr('data-piece');
+                $.ajax({
+                    type: 'PATCH',
+                    url: '{{ url('sepet/update') }}/' + id,
+                    data: {piece: piece},
+                    headers: {
+                        'X-CSRF-TOKEN': token
+                    },
+                    success: function (result) {
+                        window.location.href = '{{ route('basket.index') }}';
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection

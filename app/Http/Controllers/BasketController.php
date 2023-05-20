@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\User;
-use Cart;
+//use Cart;
+//use Gloudemans\Shoppingcart\Cart;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class BasketController extends Controller
@@ -29,5 +31,12 @@ class BasketController extends Controller
     {
         Cart::destroy();
         return redirect()->to('/')->with('success','Sepet boşaltıldı');
+    }
+
+    public function update($rowid)
+    {
+        Cart::update($rowid, request('piece'));
+        session()->flash('success', 'Adet bilgisi güncellendi');
+        return response()->json(['success' => true]);
     }
 }
