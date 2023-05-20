@@ -33,7 +33,7 @@ class BasketController extends Controller
                 $active_basket_id = $active_basket->id;
                 session()->put('active_basket_id', $active_basket_id);
             }
-            BasketProduct::updatedOrCreate(
+            BasketProduct::updateOrCreate(
                 ['basket_id'=>$active_basket_id,'product_id'=>$product->id],
                 ['piece'=>$cart->qty,'amount'=>$product->price,'situation'=>'Beklemede']
             );
@@ -43,18 +43,40 @@ class BasketController extends Controller
 
     public function remove($rowid)
     {
+        if (auth()->check())
+        {
+            $active_basket_id = session('active_basket_id');
+            $cart = Cart::get($rowid);
+            BasketProduct::where('basket_id',$active_basket_id)->where('product_id',$cart->id)->delete();
+        }
         Cart::remove($rowid);
         return redirect()->to('/sepet')->with('success','Ürün sepetten kaldırıldı');
     }
 
     public function unload()
     {
+        if (auth()->check())
+        {
+            $active_basket_id = session('active_basket_id');
+
+            BasketProduct::where('basket_id',$active_basket_id)->delete();
+        }
+
         Cart::destroy();
         return redirect()->to('/')->with('success','Sepet boşaltıldı');
     }
 
     public function update($rowid)
     {
+        if (auth()->check()) {
+            $active_basket_id = session('active_basket_id');
+            $cart = Cart::get($rowid);
+            if (request('piece') == 0) {
+                BasketProduct::where('basket_id', $active_basket_id)->where('product_id', $cart->id)->delete();
+            } else {
+                BasketProduct::where('basket_id', $active_basket_id)->where('product_id', $cart->id)->update(['piece' => request('piece')]);
+            }
+        }
         Cart::update($rowid, request('piece'));
         session()->flash('success', 'Adet bilgisi güncellendi');
         return response()->json(['success' => true]);
