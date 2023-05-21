@@ -16,11 +16,15 @@ class Basket extends Model
     const CREATED_AT = "created_at";
     const UPDATED_AT = "updated_at";
 
-    public function siparis()
+    public function order_()
     {
         return $this->hasOne(Order::class);
     }
 
+    public function basket_products()
+    {
+        return  $this->hasMany(BasketProduct::class);
+    }
     public static function aktif_sepet_id()
     {
         $active_basket = DB::table('basket as s')
