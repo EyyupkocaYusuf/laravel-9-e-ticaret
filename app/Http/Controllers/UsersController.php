@@ -34,7 +34,12 @@ class UsersController extends Controller
         if(Auth::attempt(['email'=>$request->email, 'password' => $request->password],$request->has('benihatirla')))
         {
             toastr()->success('Giriş Yapıldı', 'Success');
-            $active_basket_id = Basket::firstOrCreate(['user_id'=>auth()->id()])->id;
+            $active_basket_id = Basket::aktif_sepet_id();
+            if(is_null($active_basket_id))
+            {
+                $active_basket = Basket::create(['user_id'=>\auth()->id()]);
+                $active_basket_id = $active_basket->id;
+            }
             session()->put('active_basket_id',$active_basket_id);
             if(Cart::count() > 0)
             {

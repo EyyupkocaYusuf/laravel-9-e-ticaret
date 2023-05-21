@@ -13,7 +13,7 @@ class Order extends Model
     protected $table = 'orders';
     protected $fillable = ['basket_id', 'order_amount','name_surname','phone','mobile_phone','address', 'installment', 'bank', 'status'];
 
-    public function basket()
+    public function sepet()
     {
         return $this->belongsTo(Basket::class, 'basket_id','id');
     }

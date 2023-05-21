@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Basket extends Model
 {
@@ -14,4 +15,27 @@ class Basket extends Model
     protected  $guarded =[];
     const CREATED_AT = "created_at";
     const UPDATED_AT = "updated_at";
+
+    public function siparis()
+    {
+        return $this->hasOne(Order::class);
+    }
+
+    public static function aktif_sepet_id()
+    {
+        $active_basket = DB::table('basket as s')
+            ->leftJoin('orders as si', 'si.basket_id', '=', 's.id')
+            ->where('s.user_id', auth()->id())
+            ->whereRaw('si.id is null')
+            ->orderByDesc('s.created_at')
+            ->select('s.id')
+            ->first();
+
+        if (!is_null($active_basket)) return $active_basket->id;
+    }
+
+    public function basket_product_piece()
+    {
+        return DB::table('basket_product')->where('basket_id', $this->id)->sum('piece');
+    }
 }
