@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('user_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('adress',200)->nullable();
-            $table->string('phone',11)->nullable();
-            $table->string('mobile_phone',11)->nullable();
+            $table->string('address',200)->nullable();
+            $table->string('phone',20)->nullable();
+            $table->string('mobile_phone',20)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes()->nullable();

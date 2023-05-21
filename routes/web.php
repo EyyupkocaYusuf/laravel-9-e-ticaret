@@ -32,8 +32,10 @@ Route::prefix('sepet')->name('basket.')->group(function (){
     Route::patch('/update/{rowid}',[\App\Http\Controllers\BasketController::class,'update'])->name('update');
 });
 
+Route::get('/odeme',[\App\Http\Controllers\PayController::class,'index'])->name('pay.index');
+Route::post('/odeme',[\App\Http\Controllers\PayController::class,'topay'])->name('pay.topay');
+
 Route::group(['middleware' =>'auth'],function (){
-    Route::get('/odeme',[\App\Http\Controllers\PayController::class,'index'])->name('pay.index');
     Route::get('/siparisler',[\App\Http\Controllers\OrdersController::class,'index'])->name('order.index');
     Route::get('/siparisler/{id}',[\App\Http\Controllers\OrdersController::class,'details'])->name('order.details');
 });

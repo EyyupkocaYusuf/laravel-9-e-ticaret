@@ -16,8 +16,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->BigInteger('basket_id')->unsigned();
-            $table->decimal('order_amount',5,4);
+            $table->decimal('order_amount',10,4);
             $table->string('status',30)->nullable();
+            $table->string('name_surname',30)->nullable();
+            $table->string('address',60)->nullable();
+            $table->string('phone',20)->nullable();
+            $table->string('mobile_phone',20)->nullable();
 
             $table->string('bank',30)->nullable();
             $table->integer('installment')->nullable();
