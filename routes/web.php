@@ -47,5 +47,3 @@ Route::prefix('kullanici')->name('users.')->group(function () {
     Route::post('/girisyap',[\App\Http\Controllers\UsersController::class,'loginPost'])->name('loginpost');
     Route::post('/cikis',[\App\Http\Controllers\UsersController::class,'logOut'])->name('logout');
 });
-
-

@@ -11,7 +11,6 @@ use App\Models\User;
 //use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\True_;
 
 class BasketController extends Controller
 {
@@ -19,11 +18,10 @@ class BasketController extends Controller
     {
         return view('basket');
     }
-
     public  function add()
     {
         $product = Product::find(\request('id'));
-        $cart = Cart::add($product->id,$product->product_name,1,$product->price,0,['slug'=>$product->slug]);
+        $cart=Cart::add($product->id,$product->product_name,1,$product->price,0,['slug'=>$product->slug]);
         if (auth()->check()){
             $active_basket_id = session('active_basket_id');
             if(!isset($active_basket_id)) {
@@ -40,7 +38,6 @@ class BasketController extends Controller
         }
         return redirect()->to('/sepet')->with('success','Ürün sepete eklendi');
     }
-
     public function remove($rowid)
     {
         if (auth()->check())
@@ -52,7 +49,6 @@ class BasketController extends Controller
         Cart::remove($rowid);
         return redirect()->to('/sepet')->with('success','Ürün sepetten kaldırıldı');
     }
-
     public function unload()
     {
         if (auth()->check())
@@ -61,14 +57,14 @@ class BasketController extends Controller
 
             BasketProduct::where('basket_id',$active_basket_id)->delete();
         }
-
         Cart::destroy();
         return redirect()->to('/')->with('success','Sepet boşaltıldı');
     }
 
     public function update($rowid)
     {
-        if (auth()->check()) {
+        if (auth()->check())
+        {
             $active_basket_id = session('active_basket_id');
             $cart = Cart::get($rowid);
             if (request('piece') == 0) {
@@ -81,5 +77,4 @@ class BasketController extends Controller
         session()->flash('success', 'Adet bilgisi güncellendi');
         return response()->json(['success' => true]);
     }
-
 }

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\UsersRegisterMail;
+use App\Models\Basket;
+use App\Models\BasketProduct;
 use App\Models\User;
 use App\Models\User_Detail;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -31,6 +34,25 @@ class UsersController extends Controller
         if(Auth::attempt(['email'=>$request->email, 'password' => $request->password],$request->has('benihatirla')))
         {
             toastr()->success('Giriş Yapıldı', 'Success');
+            $active_basket_id = Basket::firstOrCreate(['user_id'=>auth()->id()])->id;
+            session()->put('active_basket_id',$active_basket_id);
+            if(Cart::count() > 0)
+            {
+                foreach (Cart::content() as $cart)
+                {
+                    BasketProduct::updateOrCreate(
+                        ['basket_id'=>$active_basket_id,'product_id'=>$cart->id],
+                        ['piece'=>$cart->qty,'amount'=>$cart->price,'situation'=>'Beklemede']
+                    );
+
+                }
+            }
+            Cart::destroy();
+            $basketProducts =BasketProduct::where('basket_id',$active_basket_id)->get();
+            foreach ($basketProducts as $basketProduct)
+            {
+                Cart::add($basketProduct->product->id,$basketProduct->product->product_name,$basketProduct->piece,$basketProduct->amount,0,['slug'=>$basketProduct->product->slug]);
+            }
             return redirect()->intended('/');
         }
         return redirect()->route('users.login')->withErrors('Mail veya Şifre hatalı');
