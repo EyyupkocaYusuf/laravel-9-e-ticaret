@@ -42,7 +42,8 @@ class BasketController extends Controller
     {
         if (auth()->check())
         {
-            $active_basket_id = session('active_basket_id');
+            $active_basket_id =
+                session('active_basket_id');
             $cart = Cart::get($rowid);
             BasketProduct::where('basket_id',$active_basket_id)->where('product_id',$cart->id)->delete();
         }

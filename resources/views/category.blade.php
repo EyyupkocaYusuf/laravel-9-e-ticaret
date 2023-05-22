@@ -59,7 +59,11 @@
                                 <a href="{{route('product.index',$product->slug)}}"><img src="https://picsum.photos/200/200"></a>
                                 <p><a href="{{route('product.index',$product->slug)}}">{{$product->product_name}}</a></p>
                                 <p class="price">{{$product->price}}</p>
-                                <p><a href="#" class="btn btn-theme">Sepete Ekle</a></p>
+                                <form action="{{route('basket.add.product')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$product->id}}">
+                                    <input type="submit" class="btn btn-theme" value="Sepete Ekle">
+                                </form>
                             </div>
                         @endforeach
                     </div>

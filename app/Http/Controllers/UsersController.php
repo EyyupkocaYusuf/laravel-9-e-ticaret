@@ -66,6 +66,7 @@ class UsersController extends Controller
     public  function logOut()
     {
         Auth::logout();
+        Cart::destroy();
         toastr()->success('Çıkış Yapıldı', 'Success');
         return redirect()->route('users.login');
     }
