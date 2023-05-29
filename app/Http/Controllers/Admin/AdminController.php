@@ -30,12 +30,21 @@ class AdminController extends Controller
             ];
             if(Auth::guard('administrator')->attempt($credentials,$request->has('meremember')))
             {
-                return redirect()->route('admin.home');
+                return redirect()->route('admin.home')->with('success','Giriş Başarılı');
             }
             else{
                 return back()->withInput()->withErrors(['email' => 'Giriş Hatalı!']);
             }
         }
         return view('admin.login');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('administrator')->logout();
+        $request->session()->flush();
+        $request->session()->regenerate();
+        toastr()->success('Çıkış Yapıldı', 'Success');
+        return redirect()->route('admin.login');
     }
 }

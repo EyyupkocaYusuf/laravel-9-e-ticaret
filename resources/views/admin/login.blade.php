@@ -11,6 +11,17 @@
 
 <body>
 <div class="container">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{session('success')}}
+        </div>
+    @else
+        @if(session('warning'))
+            <div class="alert alert-warning">
+                {{session('warning')}}
+            </div>
+        @endif
+    @endif
     <form class="form-signin" action="{{route('admin.login')}}" method="post">
         @csrf
         <img src="/img/logo.png" class="logo">

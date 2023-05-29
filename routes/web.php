@@ -20,6 +20,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::redirect('/','/admin/oturumac');
     Route::match(['get','post'],'/oturumac',[\App\Http\Controllers\Admin\AdminController::class,'login'])->name('login');
     Route::get('/anasayfa',[\App\Http\Controllers\Admin\HomeController::class,'index'])->name('home');
+    Route::get('/cıkısyap',[\App\Http\Controllers\Admin\AdminController::class,'logout'])->name('logout');
 });
 
 
