@@ -16,6 +16,14 @@ Route::patch('sepet/update/{rowid}', [\App\Http\Controllers\BasketController::cl
     ->name('basket.update')
     ->middleware('web');
 
+Route::prefix('admin')->name('admin.')->group(function (){
+    Route::get('/',function (){
+        return "admin home page";
+    });
+
+});
+Route::get('/admin/oturumac',[\App\Http\Controllers\Admin\AdminController::class,'login'])->name('login');
+
 Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('home');
 Route::get('/kategori/{slug_categoryname}',[\App\Http\Controllers\CategoriesController::class,'index'])->name('category.index');
 

@@ -7,8 +7,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{route('home')}}">
-                <img src="/img/logo.png">
+            <a style=" color: red ; font-size: 30px " class="navbar-brand" href="{{route('home')}}">
+               E-DreamShop
             </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->

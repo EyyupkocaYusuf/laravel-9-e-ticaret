@@ -7,8 +7,6 @@ use App\Models\Basket;
 use App\Models\BasketProduct;
 use App\Models\Product;
 use App\Models\User;
-//use Cart;
-//use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
