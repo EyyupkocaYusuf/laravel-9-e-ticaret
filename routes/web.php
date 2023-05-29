@@ -17,10 +17,8 @@ Route::patch('sepet/update/{rowid}', [\App\Http\Controllers\BasketController::cl
     ->middleware('web');
 
 Route::prefix('admin')->name('admin.')->group(function (){
-    Route::get('/',function (){
-        return "admin home page";
-    });
-    Route::get('/oturumac',[\App\Http\Controllers\Admin\AdminController::class,'login'])->name('login');
+    Route::redirect('/','/admin/oturumac');
+    Route::match(['get','post'],'/oturumac',[\App\Http\Controllers\Admin\AdminController::class,'login'])->name('login');
     Route::get('/anasayfa',[\App\Http\Controllers\Admin\HomeController::class,'index'])->name('home');
 });
 
