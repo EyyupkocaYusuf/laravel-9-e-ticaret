@@ -16,6 +16,8 @@ Route::patch('sepet/update/{rowid}', [\App\Http\Controllers\BasketController::cl
     ->name('basket.update')
     ->middleware('web');
 
+// Admin Routes
+
 Route::prefix('admin')->name('admin.')->group(function (){
     Route::redirect('/','/admin/oturumac');
     Route::match(['get','post'],'/oturumac',[\App\Http\Controllers\Admin\AdminController::class,'login'])->name('login');
@@ -23,9 +25,18 @@ Route::prefix('admin')->name('admin.')->group(function (){
 
     Route::group(['middleware' =>'Admin'],function (){
         Route::get('/anasayfa',[\App\Http\Controllers\Admin\HomeController::class,'index'])->name('home');
+
+        Route::prefix( 'kategori')->name('category.')->group(function (){
+            Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\CategoryController::class,'index'])->name('index');
+            Route::get('/yeni', 'KategoriController@form')->name('add');
+            Route::get('/duzenle/{id}', 'KategoriController@form')->name('edit');
+            Route::post('/kaydet/{id?}', 'KategoriController@kaydet')->name('save');
+            Route::get('/sil/{id}', 'KategoriController@sil')->name('delete');
+        });
     });
 });
 
+// Web Routes
 
 Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('home');
 Route::get('/kategori/{slug_categoryname}',[\App\Http\Controllers\CategoriesController::class,'index'])->name('category.index');
