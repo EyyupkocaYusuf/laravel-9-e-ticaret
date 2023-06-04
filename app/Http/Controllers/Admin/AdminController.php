@@ -54,7 +54,19 @@ class AdminController extends Controller
 
     public function index()
     {
-        $list = User::orderByDesc('created_at')->paginate(8);
+        if(request()->filled('wanted'))
+        {
+            request()->flash();
+            $wanted = request('wanted');
+            $list = User::where('name_surname','like',"%$wanted%")
+                ->orWhere('email','like',"%$wanted%")
+                ->orderByDesc('created_at')
+                ->paginate(8);
+        }
+        else
+        {
+            $list = User::orderByDesc('created_at')->paginate(8);
+        }
         return view('admin.User.index',compact('list'));
     }
 
@@ -103,6 +115,7 @@ class AdminController extends Controller
             ->route('admin.user.update',$entry->id)
             ->with('success',($id>0?'Güncellendi':'kaydedildi'));
     }
+
     public function delete($id)
     {
         User::destroy($id);
