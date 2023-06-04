@@ -31,7 +31,7 @@ class UsersController extends Controller
 
     public  function loginPost(Request $request)
     {
-        if(Auth::attempt(['email'=>$request->email, 'password' => $request->password],$request->has('benihatirla')))
+        if(Auth::attempt(['email'=>$request->email, 'password' => $request->password,'is_active'=>1],$request->has('benihatirla')))
         {
             toastr()->success('Giriş Yapıldı', 'Success');
             $active_basket_id = Basket::aktif_sepet_id();

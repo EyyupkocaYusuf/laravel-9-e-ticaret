@@ -11,11 +11,11 @@ class User extends Authenticatable
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['name_surname','email','password','activation_key','is_active'];
+    protected $fillable = ['name_surname','email','password','activation_key','is_active','is_admin'];
     protected $hidden = ['password','activation_key'];
 
     public function detail()
     {
-        return $this->hasOne(User_Detail::class);
+        return $this->hasOne(User_Detail::class)->withDefault();
     }
 }

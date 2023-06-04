@@ -33,6 +33,13 @@ Route::prefix('admin')->name('admin.')->group(function (){
             Route::post('/kaydet/{id?}', [\App\Http\Controllers\Admin\CategoryController::class,'save'])->name('save');
             Route::get('/sil/{id}', 'KategoriController@sil')->name('delete');
         });
+        Route::prefix('kullanici')->name('user.')->group(function (){
+            Route::match(['get','post'],'/',[\App\Http\Controllers\Admin\AdminController::class,'index']);
+            Route::get('/yeni',[\App\Http\Controllers\Admin\AdminController::class,'form'])->name('new');
+            Route::get('/düzenle/{id}',[\App\Http\Controllers\Admin\AdminController::class,'form'])->name('update');
+            Route::post('/kaydet/{id?}',[\App\Http\Controllers\Admin\AdminController::class,'save'])->name('save');
+            Route::get('/sil/{id}',[\App\Http\Controllers\Admin\AdminController::class,'delete'])->name('delete');
+        });
     });
 });
 
