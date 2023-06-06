@@ -33,6 +33,15 @@ Route::prefix('admin')->name('admin.')->group(function (){
             Route::post('/kaydet/{id?}', [\App\Http\Controllers\Admin\CategoryController::class,'save'])->name('save');
             Route::get('/sil/{id}', [\App\Http\Controllers\Admin\CategoryController::class,'delete'])->name('delete');
         });
+
+        Route::prefix( 'urun')->name('product.')->group(function (){
+            Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\ProductController::class,'index'])->name('index');
+            Route::get('/yeni', [\App\Http\Controllers\Admin\ProductController::class,'form'])->name('add');
+            Route::get('/duzenle/{id}', [\App\Http\Controllers\Admin\ProductController::class,'form'])->name('edit');
+            Route::post('/kaydet/{id?}', [\App\Http\Controllers\Admin\ProductController::class,'save'])->name('save');
+            Route::get('/sil/{id}', [\App\Http\Controllers\Admin\ProductController::class,'delete'])->name('delete');
+        });
+
         Route::prefix('kullanici')->name('user.')->group(function (){
             Route::match(['get','post'],'/',[\App\Http\Controllers\Admin\AdminController::class,'index']);
             Route::get('/yeni',[\App\Http\Controllers\Admin\AdminController::class,'form'])->name('new');
@@ -48,7 +57,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
 Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('home');
 Route::get('/kategori/{slug_categoryname}',[\App\Http\Controllers\CategoriesController::class,'index'])->name('category.index');
 
-Route::get('/urun/{slug_productname}',[\App\Http\Controllers\ProductsController::class,'index'])->name('product.index');
+Route::get('/product/{slug_productname}',[\App\Http\Controllers\ProductsController::class,'index'])->name('product.index');
 
 Route::post('/ara',[\App\Http\Controllers\ProductsController::class,'Search'])->name('product.search');
 Route::get('/ara',[\App\Http\Controllers\ProductsController::class,'Search'])->name('product.search');
