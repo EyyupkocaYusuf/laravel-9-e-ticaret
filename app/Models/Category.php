@@ -15,4 +15,11 @@ class Category extends Model
     {
         return $this->belongsToMany(Product::class,'category_product','category_id','product_id');
     }
+    public function top_category()
+    {
+        return $this->belongsTo(Category::class,'top_id')
+            ->withDefault([
+                'category_name'=> 'Ana Kategori'
+            ]);
+    }
 }

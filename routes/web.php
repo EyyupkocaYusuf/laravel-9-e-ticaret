@@ -31,7 +31,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
             Route::get('/yeni', [\App\Http\Controllers\Admin\CategoryController::class,'form'])->name('add');
             Route::get('/duzenle/{id}', [\App\Http\Controllers\Admin\CategoryController::class,'form'])->name('edit');
             Route::post('/kaydet/{id?}', [\App\Http\Controllers\Admin\CategoryController::class,'save'])->name('save');
-            Route::get('/sil/{id}', 'KategoriController@sil')->name('delete');
+            Route::get('/sil/{id}', [\App\Http\Controllers\Admin\CategoryController::class,'delete'])->name('delete');
         });
         Route::prefix('kullanici')->name('user.')->group(function (){
             Route::match(['get','post'],'/',[\App\Http\Controllers\Admin\AdminController::class,'index']);

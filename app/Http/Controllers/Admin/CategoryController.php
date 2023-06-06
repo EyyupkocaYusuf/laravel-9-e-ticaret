@@ -4,26 +4,33 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\User;
+use Illuminate\Http\Request;
+use function Webmozart\Assert\Tests\StaticAnalysis\resource;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        if(request()->filled('aranan'))
+        if(request()->filled('aranan') || request()->filled('top_id'))
         {
-            request()->flush();
+            request()->flash();
             $aranan = request('aranan');
-            $list = Category::where('category_name','like', "%$aranan%")
-                ->orderByDesc('created_at')
-                ->paginate(8)
-                ->appends('aranan',$aranan);
+            $top_id = request('top_id');
+            $list = Category::with('top_category')
+                ->where('category_name','like', "%$aranan%")
+                ->where('top_id',$top_id)
+                ->orderByDesc('id')
+                ->paginate(2)
+                ->appends(['aranan'=>$aranan,'top_id'=>$top_id]);
         }else{
-            $list = Category::orderByDesc('created_at')->paginate(8);
+            request()->flush();
+            $list = Category::with('top_category')->orderByDesc('id')->paginate(8);
         }
 
-        return view('admin.kategori.index',compact('list'));
+        $main_categories= Category::whereRaw('top_id is null')->get();
+        return view('admin.kategori.index',compact('list','main_categories'));
     }
 
     public function form($id = 0)
@@ -39,10 +46,19 @@ class CategoryController extends Controller
 
     public function save($id = 0)
     {
+
+        $data = request()->only('category_name','slug','top_id');
+        if(!request()->filled('slug'))
+        {
+            $data['slug']= str::slug(request('category_name'));
+            request()->merge(['slug'=>$data['slug']]);
+        }
+
         $this->validate(request(), [
             'category_name' => 'required',
+            'slug'=>(request('original_slug') != request('slug') ?'unique:categories,slug':'')
         ]);
-        $data = request()->only('category_name','slug','top_id');
+
         if ($id > 0) {
             $entry = Category::where('id', $id)->firstOrFail();
             $entry->update($data);
@@ -52,8 +68,17 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('admin.category.edit', $entry->id)
-            ->with('mesaj', ($id > 0 ? 'Güncellendi' : 'Kaydedildi'))
-            ->with('mesaj_tur', 'success');
+            ->with('success',($id>0?'Güncellendi':'kaydedildi'));
     }
+    public function delete($id)
+    {
+         $category= Category::find($id);
+         $category->products()->detach();
+         Category::destroy($id);
+        return redirect()
+            ->route('admin.category.index')
+            ->with('success','Kayıt silindi');
+    }
+
 
 }

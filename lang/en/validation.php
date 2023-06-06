@@ -158,6 +158,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name_surname'=>'Ad Soyad',
+        'email'=>'Email',
+        'password'=> 'Şifre',
+        'slug'=>'Slug'
+    ],
 
 ];

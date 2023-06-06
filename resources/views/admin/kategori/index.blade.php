@@ -13,6 +13,13 @@
             <div class="form-group">
                 <label for="aranan">Ara</label>
                 <input type="text" class="form-control form-control-sm" name="aranan" id="aranan" placeholder="Kategori Ara..." value="{{ old('aranan') }}">
+                <label for="main_categories">Üst Kategori</label>
+                <select name="top_id" id="top_id" class="form-control">
+                    <option value="">Seçiniz</option>
+                    @foreach($main_categories as $category)
+                        <option value="{{$category->id}}" {{old('top_id') == $category->id ? 'selected': ''}}>{{$category->category_name}}</option>
+                    @endforeach
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Ara</button>
             <a href="{{ route('admin.category.index') }}" class="btn btn-primary">Temizle</a>
@@ -26,6 +33,7 @@
             <thead class="thead-dark">
             <tr>
                 <th>#</th>
+                <th>Üst Kategori</th>
                 <th>Slug</th>
                 <th>Kategori Adı</th>
                 <th>Kayıt Tarihi</th>
@@ -39,6 +47,7 @@
             @foreach ($list as $entry)
                 <tr>
                     <td>{{ $entry->id }}</td>
+                    <td>{{$entry->top_category->category_name}}</td>
                     <td>{{ $entry->slug }}</td>
                     <td>{{ $entry->category_name }}</td>
                     <td>{{ $entry->created_at }}</td>
