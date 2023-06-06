@@ -71,5 +71,17 @@
                 <input type="checkbox" name="show_discount" value="1" {{ old('show_discount', $entry->details->show_discount) ? 'checked' : '' }}> İndirimli Ürünlerde Göster
             </label>
         </div>
+
+
     </form>
+@endsection
+
+@section('head')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+@endsection
+@section('footer')
+    <script src="//cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.9.2/plugins/autogrow/plugin.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +36,8 @@ class ProductController extends Controller
         {
             $entry=Product::find($id);
         }
-        return view('admin.product.form',compact('entry'));
+        $kategoriler = Category::all();
+        return view('admin.product.form',compact('entry','kategoriler'));
     }
 
     public function save($id = 0)
@@ -56,6 +58,8 @@ class ProductController extends Controller
 
         $data_detail = request()->only('show_slider', 'show_opportunity_day', 'show_featured', 'show_bestseller', 'show_discount');
 
+        $kategoriler = request('kategoriler');
+
         if ($id > 0) {
             $entry = Product::where('id', $id)->firstOrFail();
             $entry->update($data);
@@ -63,6 +67,7 @@ class ProductController extends Controller
         } else {
             $entry = Product::create($data);
             $entry->details()->create($data_detail);
+            $entry->categories()->attach($kategoriler);
         }
 
         return redirect()
