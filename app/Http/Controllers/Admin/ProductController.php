@@ -72,6 +72,11 @@ class ProductController extends Controller
 
     public function delete($id)
     {
-
+        $product =  Product::find($id);
+        $product->categories()->detach(); // detach fonksiyonu many to many iliskiside kullanılır.
+        $product->delete();
+        return redirect()
+            ->route('admin.product.index')
+            ->with('success','Kayıt silindi');
     }
 }
