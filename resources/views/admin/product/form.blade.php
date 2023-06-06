@@ -72,6 +72,18 @@
             </label>
         </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="categories">Kategoriler</label>
+                    <select name="kategoriler[]" class="form-control" id="kategoriler" multiple>
+                        @foreach($kategoriler as $kategori)
+                            <option value="{{ $kategori->id }}">{{ $kategori->category_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
 
     </form>
 @endsection
@@ -83,5 +95,12 @@
     <script src="//cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.9.2/plugins/autogrow/plugin.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script>
+        $(function () {
+            $('#kategoriler').select2({
+                placeholder: 'Lütfen kategori seçiniz'
+            });
 
+        });
+    </script>
 @endsection
