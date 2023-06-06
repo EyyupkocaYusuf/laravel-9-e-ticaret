@@ -32,12 +32,14 @@ class ProductController extends Controller
     public function form($id = 0)
     {
         $entry= new Product;
+        $urun_kategoriler = [];
         if($id>0)
         {
             $entry=Product::find($id);
+            $urun_kategoriler = $entry->categories()->pluck('category_id')->all();
         }
         $kategoriler = Category::all();
-        return view('admin.product.form',compact('entry','kategoriler'));
+        return view('admin.product.form',compact('entry','kategoriler','urun_kategoriler'));
     }
 
     public function save($id = 0)
@@ -64,6 +66,7 @@ class ProductController extends Controller
             $entry = Product::where('id', $id)->firstOrFail();
             $entry->update($data);
             $entry->details()->update($data_detail);
+            $entry->categories()->sync($kategoriler);
         } else {
             $entry = Product::create($data);
             $entry->details()->create($data_detail);

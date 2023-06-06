@@ -78,7 +78,7 @@
                     <label for="categories">Kategoriler</label>
                     <select name="kategoriler[]" class="form-control" id="kategoriler" multiple>
                         @foreach($kategoriler as $kategori)
-                            <option value="{{ $kategori->id }}">{{ $kategori->category_name }}</option>
+                            <option value="{{ $kategori->id }}" {{ collect(old('kategoriler', $urun_kategoriler))->contains($kategori->id) ? 'selected': '' }}>{{ $kategori->category_name }}</option>
                         @endforeach
                     </select>
                 </div>
