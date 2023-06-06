@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="page-header">Ürün Yönetimi</h1>
 
-    <form method="post" action="{{ route('admin.product.save', $entry->id) }}">
+    <form method="post" action="{{ route('admin.product.save', $entry->id) }}" enctype="multipart/form-data">
         @csrf
 
         <div class="pull-right">
@@ -84,7 +84,13 @@
                 </div>
             </div>
         </div>
-
+        <div class="form-group">
+            @if ($entry->details->product_image!=null)
+                <img src="/uploads/urunler/{{ $entry->details->product_image }}" style="height: 100px; margin-right: 20px;" class="thumbnail pull-left">
+            @endif
+            <label for="product_image">Ürün Resmi</label>
+            <input type="file" id="product_image" name="product_image">
+        </div>
     </form>
 @endsection
 

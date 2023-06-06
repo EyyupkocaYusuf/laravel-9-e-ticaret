@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Product_detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -71,6 +73,30 @@ class ProductController extends Controller
             $entry = Product::create($data);
             $entry->details()->create($data_detail);
             $entry->categories()->attach($kategoriler);
+        }
+
+        if (request()->hasFile('product_image')) {
+            $this->validate(request(), [
+                'product_image' => 'image|mimes:jpg,png,jpeg,gif|max:2048'
+            ]);
+
+            $product_image = request()->file('product_image');
+            //$product_image = request()->product_image;
+
+            $dosyaadi = $entry->id . "-" . time() . "." . $product_image->extension();
+            //$dosyaadi = $product_image->getClientOriginalName();
+            //$dosyaadi = $product_image->hashName();
+
+            if ($product_image->isValid()) {
+                File::delete('uploads/urunler/' . $entry->details->product_image);
+
+                $product_image->move('uploads/urunler', $dosyaadi);
+
+                Product_detail::updateOrCreate(
+                    ['product_id' => $entry->id],
+                    ['product_image' => $dosyaadi]
+                );
+            }
         }
 
         return redirect()
