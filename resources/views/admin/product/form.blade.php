@@ -1,78 +1,74 @@
 @extends('admin.layouts.master')
-@section('title','Kullanıcı Yönetimi')
+@section('title', 'Ürün Yönetimi')
 @section('content')
-    <h1 class="page-header">Kullanıcı Yönetimi</h1>
-    <form method="post" action="{{route('admin.product.save',@$entry->id)}}">
+    <h1 class="page-header">Ürün Yönetimi</h1>
+
+    <form method="post" action="{{ route('admin.product.save', $entry->id) }}">
         @csrf
+
         <div class="pull-right">
             <button type="submit" class="btn btn-primary">
-                {{@$entry->id > 0 ? "Güncelle" : "Kaydet" }}
+                {{ $entry->id > 0 ? "Güncelle" : "Kaydet" }}
             </button>
         </div>
-        <h2 class="sub-header">
-            Ürün {{@$entry->id >0 ? "Düzenle":"Ekle"}}
-        </h2>
+        <h3 class="sub-header">
+            Kategori {{ $entry->id > 0 ? "Düzenle" : "Ekle" }}
+        </h3>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name_surname">Ad Soyad</label>
-                    <input type="text" class="form-control" id="name_surname" placeholder="Name Surname" name="name_surname" value="{{old('name_surname',$entry->name_surname)}}">
+                    <label for="product_name">Ürün Adı</label>
+                    <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Ürün Adı" value="{{ old('product_name', $entry->product_name) }}">
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="slug">Slug</label>
+                    <input type="hidden" name="slug" value="{{ old('slug', $entry->slug) }}">
+                    <input type="text" class="form-control" id="slug" name="slug" placeholder="Slug" value="{{ old('slug', $entry->slug) }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="explanation">Ürün Açıklaması</label>
+                    <textarea class="form-control" id="explanation" name="explanation">{{ old('explanation', $entry->explanation) }}</textarea>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="{{old('email',$entry->email)}}">
+                    <label for="price">Ürün Fiyatı</label>
+                    <input type="text" class="form-control" id="price" name="price" placeholder="Ürün Fiyatı" value="{{ old('price', $entry->price) }}">
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password"  name="password" placeholder="Password">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="address">Adres</label>
-                    <input type="text" class="form-control" id="address" placeholder="Address"  name="address" value="{{old('address',$entry->detail->address)}}">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="phone">Telefon</label>
-                    <input type="text" class="form-control" id="phone" placeholder="Phone"  name="phone" value="{{old('phone',$entry->detail->phone)}}">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="mobile_phone">Cep Telefonu</label>
-                    <input type="text" class="form-control" id="mobile_phone" placeholder="Mobile Phone"  name="mobile_phone" value="{{old('mobile_phone',$entry->detail->mobile_phone)}}">
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputFile">File input</label>
-            <input type="file" id="exampleInputFile">
-            <p class="help-block">Example block-level help text here.</p>
         </div>
         <div class="checkbox">
             <label>
-                <input type="hidden" name="is_active" value="0">
-                <input type="checkbox" name="is_active"{{old('is_active',$entry->is_active) ? "checked":""}}> Aktif Mi
+                <input type="hidden" name="show_slider" value="0">
+                <input type="checkbox" name="show_slider" value="1" {{ old('show_slider', $entry->details->show_slider) ? 'checked' : '' }}> Slider'da Göster
             </label>
-        </div>
-        <div class="checkbox">
             <label>
-                <input type="hidden" name="is_admin" value="0">
-                <input type="checkbox" name="is_admin" {{old('is_admin',$entry->is_admin )? "checked":""}}> Yönetici Mi
+                <input type="hidden" name="show_opportunity_day" value="0">
+                <input type="checkbox" name="show_opportunity_day" value="1" {{ old('show_opportunity_day', $entry->details->show_opportunity_day) ? 'checked' : '' }}> Günün Fırsatında Göster
+            </label>
+            <label>
+                <input type="hidden" name="show_featured" value="0">
+                <input type="checkbox" name="show_featured" value="1" {{ old('show_featured', $entry->details->show_featured) ? 'checked' : '' }}> Öne Çıkan Alanında Göster
+            </label>
+            <label>
+                <input type="hidden" name="show_bestseller" value="0">
+                <input type="checkbox" name="show_bestseller" value="1" {{ old('show_bestseller', $entry->details->show_bestseller) ? 'checked' : '' }}> Çok Satan Ürünlerde Göster
+            </label>
+            <label>
+                <input type="hidden" name="show_discount" value="0">
+                <input type="checkbox" name="show_discount" value="1" {{ old('show_discount', $entry->details->show_discount) ? 'checked' : '' }}> İndirimli Ürünlerde Göster
             </label>
         </div>
     </form>
