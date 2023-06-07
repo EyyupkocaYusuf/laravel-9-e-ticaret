@@ -57,7 +57,7 @@
                 <div class="panel panel-default" id="sidebar-product">
                     <div class="panel-heading">Günün Fırsatı</div>
                     <div class="panel-body">
-                        <a href="{{ route('admin.product.index', $product_day->slug) }}">
+                        <a href="{{ route('product.index', $product_day->slug) }}">
                             <img src="{{ $product_day->details->product_image !=null ? asset('uploads/urunler/' . $product_day->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;">
                             {{ $product_day->product_name }}
                         </a>

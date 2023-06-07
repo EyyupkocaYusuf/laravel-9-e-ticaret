@@ -8,7 +8,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Header</div>
                 <div class="panel-body">
-                    <h4>123</h4>
+                    <h4>{{$bekleyen_siparisler}}</h4>
                     <p>Data</p>
                 </div>
             </div>

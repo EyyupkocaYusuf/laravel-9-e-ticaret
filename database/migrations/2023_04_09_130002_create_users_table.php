@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password',60);
             $table->string('activation_key',60)->nullable();
             $table->boolean('is_active')->default(0);
-            $table->boolean('is_admin')->unsigned();
+            $table->boolean('is_admin')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
