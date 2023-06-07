@@ -57,9 +57,9 @@
                 <div class="panel panel-default" id="sidebar-product">
                     <div class="panel-heading">Günün Fırsatı</div>
                     <div class="panel-body">
-                        <a href="#">
-                            <img src="http://lorempixel.com/400/485/food/1" class="img-responsive">
-                            {{$product_day->product_name}}
+                        <a href="{{ route('admin.product.index', $product_day->slug) }}">
+                            <img src="{{ $product_day->details->product_image !=null ? asset('uploads/urunler/' . $product_day->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;">
+                            {{ $product_day->product_name }}
                         </a>
                     </div>
                 </div>
@@ -74,8 +74,13 @@
                     <div class="row">
                         @foreach($show_featured as $product)
                             <div class="col-md-3 product">
-                                <a href="{{route('product.index',$product->slug)}}"><img src="http://lorempixel.com/400/400/food/1"></a>
-                                <p><a href="{{route('product.index',$product->slug)}}">{{$product->product_name}}</a></p>
+                                <a href="{{route('product.index',$product->slug)}}">
+                                    <img src="{{ $product->details->product_image !=null ? asset('uploads/urunler/' . $product->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;">
+
+                                </a>
+                                <p>
+                                    <a href="{{route('product.index',$product->slug)}}">{{$product->product_name}}</a>
+                                </p>
                                 <p class="price">{{$product->price}} ₺</p>
                             </div>
                         @endforeach
@@ -91,8 +96,12 @@
                     <div class="row">
                         @foreach($show_bestseller as $product)
                             <div class="col-md-3 product">
-                                <a href="{{route('product.index',$product->slug)}}"><img src="http://lorempixel.com/400/400/food/1"></a>
-                                <p><a href="{{route('product.index',$product->slug)}}">{{$product->product_name}}</a></p>
+                                <a href="{{route('product.index',$product->slug)}}">
+                                    <img src="{{ $product->details->product_image !=null ? asset('uploads/urunler/' . $product->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;">
+                                </a>
+                                <p>
+                                    <a href="{{route('product.index',$product->slug)}}">{{$product->product_name}}</a>
+                                </p>
                                 <p class="price">{{$product->price}} ₺</p>
                             </div>
                         @endforeach
@@ -107,8 +116,12 @@
                     <div class="row">
                         @foreach($show_discount as $product)
                             <div class="col-md-3 product">
-                                <a href="{{route('product.index',$product->slug)}}"><img src="http://lorempixel.com/400/400/food/1"></a>
-                                <p><a href="{{route('product.index',$product->slug)}}">{{$product->product_name}}</a></p>
+                                <a href="{{route('product.index',$product->slug)}}">
+                                    <img src="{{ $product->details->product_image !=null ? asset('uploads/urunler/' . $product->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;">
+                                </a>
+                                <p>
+                                    <a href="{{route('product.index',$product->slug)}}">{{$product->product_name}}</a>
+                                </p>
                                 <p class="price">{{$product->price}} ₺</p>
                             </div>
                         @endforeach
