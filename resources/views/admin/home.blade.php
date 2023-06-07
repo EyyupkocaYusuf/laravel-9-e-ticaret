@@ -100,5 +100,40 @@
                 }
             }
         });
+
+        @php
+            $labels = "";
+            $data = "";
+            foreach($aylara_gore_satislar as $rapor) {
+                $labels .= "\"$rapor->ay\", ";
+                $data .= "$rapor->adet, ";
+            }
+        @endphp
+        var ctx2 = document.getElementById("chartAylaraGoreSatislar").getContext('2d');
+        var chartAylaraGoreSatislar = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: [{!! $labels !!}],
+                datasets: [{
+                    label: 'Aylara Göre Satışlar',
+                    data: [{!! $data !!}],
+                    borderColor: '#f4645f',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    position: 'bottom'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
     </script>
 @endsection
