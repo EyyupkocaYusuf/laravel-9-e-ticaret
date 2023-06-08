@@ -65,6 +65,7 @@ class AdminController extends Controller
         }
         else
         {
+            request()->flush();
             $list = User::orderByDesc('created_at')->paginate(8);
         }
         return view('admin.User.index',compact('list'));

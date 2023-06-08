@@ -11,7 +11,7 @@ class OrdersController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('basket_')->whereHas('basket_', function($query) {
+        $orders = Order::with('basket')->whereHas('basket', function($query) {
             $query->where('user_id', auth()->id());
         })->orderByDesc('created_at')->get();
         return view('order',compact('orders'));
@@ -19,7 +19,7 @@ class OrdersController extends Controller
 
     public function details($id)
     {
-        $order = Order::with('basket_.basket_products.product')->whereHas('basket_', function($query) {
+        $order = Order::with('basket.basket_products.product')->whereHas('basket', function($query) {
             $query->where('user_id', auth()->id());
         })->where('id',$id)->firstOrFail();
         return view('details',compact('order'));

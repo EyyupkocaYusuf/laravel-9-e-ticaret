@@ -42,6 +42,14 @@ Route::prefix('admin')->name('admin.')->group(function (){
             Route::get('/sil/{id}', [\App\Http\Controllers\Admin\ProductController::class,'delete'])->name('delete');
         });
 
+        Route::prefix( 'siparis')->name('order.')->group(function (){
+            Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\OrderController::class,'index'])->name('index');
+            Route::get('/yeni', [\App\Http\Controllers\Admin\OrderController::class,'form'])->name('add');
+            Route::get('/duzenle/{id}', [\App\Http\Controllers\Admin\OrderController::class,'form'])->name('edit');
+            Route::post('/kaydet/{id?}', [\App\Http\Controllers\Admin\OrderController::class,'save'])->name('save');
+            Route::get('/sil/{id}', [\App\Http\Controllers\Admin\OrderController::class,'delete'])->name('delete');
+        });
+
         Route::prefix('kullanici')->name('user.')->group(function (){
             Route::match(['get','post'],'/',[\App\Http\Controllers\Admin\AdminController::class,'index']);
             Route::get('/yeni',[\App\Http\Controllers\Admin\AdminController::class,'form'])->name('new');

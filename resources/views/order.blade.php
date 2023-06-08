@@ -19,7 +19,7 @@
                         <tr>
                             <td>SP-{{ $order->id }}</td>
                             <td>{{ $order->order_amount * ((100+config('cart.tax'))/100) }}</td>
-                            <td>{{$order->basket_->basket_product_piece()}}</td>
+                            <td>{{$order->basket->basket_product_piece()}}</td>
                             <td>{{ $order->status }}</td>
                             <td><a href="{{ route('order.details', $order->id) }}" class="btn btn-sm btn-success">Detay</a></td>
                         </tr>

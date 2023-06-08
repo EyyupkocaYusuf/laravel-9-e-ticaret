@@ -65,7 +65,7 @@
         </div>
         <div class="checkbox">
             <label>
-                <input type="hidden" name="is_active" value="0">
+                <input type="hidden" name="is_active " value="0">
                 <input type="checkbox" name="is_active"{{old('is_active',$entry->is_active) ? "checked":""}}> Aktif Mi
             </label>
         </div>

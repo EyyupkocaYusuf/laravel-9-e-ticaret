@@ -16,7 +16,7 @@
                     <th>Ara Toplam</th>
                     <th>Durum</th>
                 </tr>
-                @foreach($order->basket_->basket_products as $basket_product)
+                @foreach($order->basket->basket_products as $basket_product)
                 <tr>
                     <td style="width: 120px">
                         <a href="{{route('product.index',$basket_product->product->slug)}}">
