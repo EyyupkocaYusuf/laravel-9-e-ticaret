@@ -19,7 +19,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="name_surname">Ad Soyad</label>
-                    <input type="text" class="form-control" id="name_surname" name="name_surname" placeholder="Ad Soyad" value="{{ old('name_surname', $entry->product_name) }}">
+                    <input type="text" class="form-control" id="name_surname" name="name_surname" placeholder="Ad Soyad" value="{{ old('name_surname', $entry->name_surname) }}">
                 </div>
             </div>
 
@@ -64,4 +64,47 @@
             </div>
         </div>
     </form>
+    <h2>Sipariş (SP-{{$entry->id}})</h2>
+    <table class="table table-bordererd table-hover">
+        <tr>
+            <th>Ürün</th>
+            <th>Ürün Adı</th>
+            <th>Tutar</th>
+            <th>Adet</th>
+            <th>Ara Toplam</th>
+            <th>Durum</th>
+        </tr>
+        @foreach($entry->basket->basket_products as $basket_product)
+            <tr>
+                <td style="width: 120px">
+                    <a href="{{route('product.index',$basket_product->product->slug)}}">
+                        <img src="{{ $basket_product->product->details->product_image !=null ? asset('uploads/urunler/' . $basket_product->product->details->product_image) : 'http://via.placeholder.com/120x100?text=UrunResmi' }}">
+
+                    </a>
+                </td>
+                <td>
+                    <a href="{{route('product.index',$basket_product->product->slug)}}">
+                        {{$basket_product->product->product_name}}
+                    </a>
+                </td>
+                <td>{{$basket_product->amount}}</td>
+                <td>{{$basket_product->piece}}</td>
+                <td>{{$basket_product->amount * $basket_product->piece}}</td>
+                <td>{{$basket_product->situation}}</td>
+            </tr>
+        @endforeach
+        <tr>
+            <th colspan="4" class="text-right">Toplam Tutar</th>
+            <td colspan="2">{{$entry->order_amount}} ₺</td>
+        </tr>
+        <tr>
+            <th colspan="4" class="text-right">Toplam Tutar (KDV' li)</th>
+            <td colspan="2">{{$entry->order_amount * ((100+config('cart.tax'))/100 ) }} ₺</td>
+        </tr>
+        <tr>
+            <th colspan="4" class="text-right">Siparişin Durumu</th>
+            <td colspan="2">{{$entry->status }} </td>
+        </tr>
+
+    </table>
 @endsection

@@ -47,70 +47,31 @@ class OrderController extends Controller
     public function save($id = 0)
     {
 
-        $data = request()->only('product_name','slug','explanation','price');
-        if(!request()->filled('slug'))
-        {
-            $data['slug']= Str::slug(request('product_name'));
-            request()->merge(['slug'=>$data['slug']]);
-        }
 
         $this->validate(request(), [
-            'product_name' => 'required',
-            'price' => 'required',
-            'slug'=>(request('slug') != request('slug') ?'unique:product,slug' : '')
+            'name_surname' => 'required',
+            'address' => 'required',
+            'status' => 'required',
+            'phone' => 'required'
         ]);
 
-        $data_detail = request()->only('show_slider', 'show_opportunity_day', 'show_featured', 'show_bestseller', 'show_discount');
 
-        $kategoriler = request('kategoriler');
-
+        $data = request()->only('name_surname','address','phone','mobile_phone','status');
         if ($id > 0) {
-            $entry = Product::where('id', $id)->firstOrFail();
+            $entry = Order::where('id', $id)->firstOrFail();
             $entry->update($data);
-            $entry->details()->update($data_detail);
-            $entry->categories()->sync($kategoriler);
-        } else {
-            $entry = Product::create($data);
-            $entry->details()->create($data_detail);
-            $entry->categories()->attach($kategoriler);
-        }
-
-        if (request()->hasFile('product_image')) {
-            $this->validate(request(), [
-                'product_image' => 'image|mimes:jpg,png,jpeg,gif|max:2048'
-            ]);
-
-            $product_image = request()->file('product_image');
-            //$product_image = request()->product_image;
-
-            $dosyaadi = $entry->id . "-" . time() . "." . $product_image->extension();
-            //$dosyaadi = $product_image->getClientOriginalName();
-            //$dosyaadi = $product_image->hashName();
-
-            if ($product_image->isValid()) {
-                File::delete('uploads/urunler/' . $entry->details->product_image);
-
-                $product_image->move('uploads/urunler', $dosyaadi);
-
-                Product_detail::updateOrCreate(
-                    ['product_id' => $entry->id],
-                    ['product_image' => $dosyaadi]
-                );
-            }
         }
 
         return redirect()
-            ->route('admin.product.edit', $entry->id)
-            ->with('success',($id>0?'Güncellendi':'kaydedildi'));
+            ->route('admin.order.edit', $entry->id)
+            ->with('success','Güncellendi');
     }
 
     public function delete($id)
     {
-        $product =  Product::find($id);
-        $product->categories()->detach(); // detach fonksiyonu many to many iliskiside kullanılır.
-        $product->delete();
+        Order::destroy($id);
         return redirect()
-            ->route('admin.product.index')
+            ->route('admin.order.index')
             ->with('success','Kayıt silindi');
     }
 }
