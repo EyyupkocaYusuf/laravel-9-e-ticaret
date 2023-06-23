@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slug',160);
             $table->string('product_name',150);
             $table->text('explanation');
-            $table->decimal('price',6,3);
+            $table->decimal('price',10,3);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes()->nullable();

@@ -12,17 +12,17 @@
         <div class="bg-content">
             <div class="row">
                 <div class="col-md-5">
-                    <img src="https://picsum.photos/400/200">
+                    <img src="{{ $product->details->product_image !=null ? asset('uploads/urunler/' . $product->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;">
                     <hr>
                     <div class="row">
                         <div class="col-xs-3">
-                            <a href="#" class="thumbnail"><img src="https://picsum.photos/200/200"></a>
+                            <a href="#" class="thumbnail"> <img src="{{ $product->details->product_image !=null ? asset('uploads/urunler/' . $product->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;"></a>
                         </div>
                         <div class="col-xs-3">
-                            <a href="#" class="thumbnail"><img src="https://picsum.photos/200/200"></a>
+                            <a href="#" class="thumbnail"> <img src="{{ $product->details->product_image !=null ? asset('uploads/urunler/' . $product->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;"></a>
                         </div>
                         <div class="col-xs-3">
-                            <a href="#" class="thumbnail"><img src="https://picsum.photos/200/200"></a>
+                            <a href="#" class="thumbnail"> <img src="{{ $product->details->product_image !=null ? asset('uploads/urunler/' . $product->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;"></a>
                         </div>
                     </div>
                 </div>

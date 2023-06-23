@@ -56,7 +56,7 @@
                         @endif
                         @foreach($products as $product)
                             <div class="col-md-3 product">
-                                <a href="{{route('product.index',$product->slug)}}"><img src="https://picsum.photos/200/200"></a>
+                                <a href="{{route('product.index',$product->slug)}}"> <img src="{{ $product->details->product_image !=null ? asset('uploads/urunler/' . $product->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;">
                                 <p><a href="{{route('product.index',$product->slug)}}">{{$product->product_name}}</a></p>
                                 <p class="price">{{$product->price}}</p>
                                 <form action="{{route('basket.add.product')}}" method="post">

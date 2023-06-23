@@ -35,7 +35,7 @@
                     <div class="carousel-inner" role="listbox">
                         @foreach($product_slider as $index => $product)
                             <a href="#" class="item {{ $index == 0 ? 'active' : '' }}">
-                                <img src="http://lorempixel.com/640/400/food/1" alt="...">
+                                <img src="{{ $product->details->product_image !=null ? asset('uploads/urunler/' . $product->details->product_image) : 'http://via.placeholder.com/400x485?text=UrunResmi' }}" class="img-responsive" style="min-width: 90%;">
                                 <div class="carousel-caption">
                                     {{ $product->product_name }}
                                 </div>
