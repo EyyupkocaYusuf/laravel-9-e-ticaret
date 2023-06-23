@@ -19,7 +19,7 @@ class ProductTableSeeder extends Seeder
     public function run()
     {
 
-        Product::truncate();
+       Product::truncate();
         Product_detail::truncate();
         $faker = Faker::create();
         for ($i=0;$i<30;$i++)
