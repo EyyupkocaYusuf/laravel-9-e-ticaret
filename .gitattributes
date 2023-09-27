@@ -1,4 +1,5 @@
 * text=auto
+*.js linguist-detectable=false
 
 *.blade.php diff=html
 *.css diff=css
